@@ -9,7 +9,7 @@
 // Ref shapes "ghosted" with "%'
 
 use <..\uxcover\char.scad>
-
+/*
 //PCB constructs (debug)
 %union(){
 translate([70,6.55,6.9]) cube([17.5,16,12]);		// RJ45 body
@@ -18,7 +18,7 @@ translate([2,11.3,6.9]) cube([12,6.5,2.1]);			// RJ45 tab opening
 translate([2,1.85,5.2]) cube([87.5,25.3,1.7]);		// PCB
 translate([2,7.95,1.96]) cube([4.2,12.4,3.24]);		// PGM conn
 }
-
+*/
 //prime (bottom) piece:
 union(){
   difference(){
@@ -28,9 +28,9 @@ union(){
       translate([0,28.3,10.9]) cube([90.2,.8,.9]);					// lip2
       translate([0,14,10.9]) cube([.9,15.1,.9]);					// lip2
       translate([89.3,14,10.9]) cube([.9,15.1,.9]);					// lip2
-	  translate([20,-1.99,5.57]) cube([10,2,12.5]);					// tab 1
+	  translate([20,-1.99,5.57]) cube([10,2,13.5]);					// tab 1
 	  translate([20,0,0.57]) rotate([21.6,0,0]) cube([10,2,5.4]);	// tab 1
-	  translate([59.7,-1.99,5.57]) cube([10,2,12.5]);				// tab 2
+	  translate([59.7,-1.99,5.57]) cube([10,2,13.5]);				// tab 2
 	  translate([59.7,0,0.57]) rotate([21.6,0,0]) cube([10,2,5.4]);	// tab 2
 
 	  translate([22.5,28.8,5]) rotate([45,0,0]) cube([5,2,2]);		// catch 3
@@ -41,11 +41,11 @@ union(){
     translate([1.8,4.2,1.8]) cube([86.6,20.7,9]);					// under pcb
     translate([-.1,7.4,5.3]) cube([95,14.3,9]);						// rj45 opening
 	rotate([180,0,0]) translate([0,-29.1,-21.8]) union(){
-	  translate([22,28.8,5]) rotate([45,0,0]) cube([6,2,2]);		// catch 3
-	  translate([61.8,28.8,5]) rotate([45,0,0]) cube([6,2,2]);		// catch 4
+	  translate([22,29.1,4.5]) rotate([45,0,0]) cube([6,2,2]);		// catch 3
+	  translate([61.8,29.1,4.5]) rotate([45,0,0]) cube([6,2,2]);		// catch 4
 	}
 	union(){
-	  translate([0,-2,17]) rotate([45,0,0]) cube([90.2,2,2]);		// tab cham
+	  translate([0,-2,18]) rotate([45,0,0]) cube([90.2,2,2]);		// tab cham
 	}
 	
 //    translate([-10,-10,-10]) cube([50,50,50]);						// section cut (leave commented-out unless needed for debug)
@@ -69,7 +69,7 @@ rotate([0,180,0]) translate([-85,7.2,-.29]) union(){
 }
 
 
-
+/*
 // top piece (exact duplicate of top piece):
 //this rotation/translation mates the two pieces for a fit check:
 //comment out for build
@@ -126,3 +126,4 @@ rotate([0,180,0]) translate([-85,7.2,-.29]) union(){
   translate([75,13.55,.31]) cube([10,2,2.4]);						// RJ45 compression rib 2
 }
 }
+*/

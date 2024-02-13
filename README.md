@@ -5,4 +5,4 @@ See https://ke0ff.github.io/hm133/index.html for project description.
 </p>
 This 3D print is 1/2 of the cover.  Print two identical parts and mate them together to get a complete cover.
 </p>
-This is RevA of the cover, it has yet to be tested but likely needs some tweaking (e.g., trimming and sanding) to get the shells to fit together.
+RevC of the cover is current.

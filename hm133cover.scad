@@ -5,6 +5,9 @@
 //	It is a 2-piece "box" consisting of two identical pieces.  Only the prime piece is printable,
 //	all other constructs are for debug and verification and should be commented out for printing.
 //
+//	Rev D, 12/05/24
+//		Added #1 screw-holes to secure the tabs
+//
 //	Rev C, 10/26/22
 //		converted 2 tabs into one "super-tab" that extends nearly the length of the part
 //		added chams to the ends of the tab
@@ -47,6 +50,9 @@ txt_szz = 5;
 ///////////////////////
 // modules
 module prime(){
+idia1 = 1.4;
+odia1 = 2;
+
 	//prime (bottom) piece:
 	union(){
 	  difference(){
@@ -60,8 +66,8 @@ module prime(){
 					translate([tab_offs,-2.99+.5,8.17]) cube([80,2.5,10.7]);				// tab
 					translate([tab_offs,0,0.57]) rotate([18.13,0,0]) cube([80,3,8.005]);	// tab taper
 
-					translate([22.5,28.8,5]) rotate([45,0,0]) cube([8,2,2]);				// catch 3
-					translate([62.2,28.8,5]) rotate([45,0,0]) cube([8,2,2]);				// catch 4
+					translate([22.5,28.9,5]) rotate([45,0,0]) cube([8,2,2]);				// catch 3
+					translate([62.2,28.9,5]) rotate([45,0,0]) cube([8,2,2]);				// catch 4
 				}
 				// tab runway
 				translate([tab_offs,29.1,2+5.57]) rotate([14,0,0]) cube([80,2,13.5]);
@@ -71,7 +77,13 @@ module prime(){
 				// tab outside chams
 				translate([tab_offs,-2.5,20]) rotate([0,0,45]) cube([1.5,1.5,40], center=true);				// tab a
 				translate([tab_offs+tab_len,-2.5,20]) rotate([0,0,45]) cube([1.5,1.5,40], center=true);		// tab b
-				
+
+				// #1 mtg hole
+				translate([20,30,5.4+1.414]) rotate([90,0,0]) cylinder(r=idia1/2, h=20, center=true, $fn=16);
+				translate([73,30,5.4+1.414]) rotate([90,0,0]) cylinder(r=idia1/2, h=20, center=true, $fn=16);
+				// #1 thru hole
+				translate([20,-1.8,15.9]) rotate([-90,0,0]) csink(); //dd=odia1, hd=20);
+				translate([73,-1.8,15.9]) rotate([-90,0,0]) csink(); //(dd=odia1, hd=20);
 
 				translate([0,0,0]) cube([2,2,30], center=true);						// main body, corner knockouts
 				translate([0,29.1,0]) cube([2,2,30], center=true);					// main body, corner knockouts
@@ -140,9 +152,14 @@ module prime(){
 		translate([25.65+.05,15+(txt_sz/2)+(.2*txt_sz)-.08,.8]) rotate([0,0,-26]) cube([.3,3.5,1.4]);			
 
 		translate([20,15-txt_sz/2,.8]) linear_extrude(1.4) text("HM133 COVER", size=txt_sz);
-		translate([20,15+(-txt_sz*3/2)-(.2*txt_sz),.8]) linear_extrude(1.4) text("REV C", size=txt_sz);
+		translate([20,15+(-txt_sz*3/2)-(.2*txt_sz),.8]) linear_extrude(1.4) text("REV D", size=txt_sz);
 	}
 } // end prime()
+
+module csink(dd=2, hd=3.5){
+	cylinder(r=dd/2, h=20, center=true, $fn=16);
+	cylinder(r1=hd/2, r2 = 0, h=hd/2, center=true, $fn=16);
+}
 
 module corner(cr=1, cht=10.9){
 	difference(){

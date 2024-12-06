@@ -5,8 +5,13 @@
 //	It is a 2-piece "box" consisting of two identical pieces.  Only the prime piece is printable,
 //	all other constructs are for debug and verification and should be commented out for printing.
 //
-//	Rev D, 12/05/24
-//		Added #1 screw-holes to secure the tabs
+//	Rev D, 12/06/24
+//		Added #1 screw-holes to secure the tabs - this involved increasing the tab height to allow
+//			the screws to thread into the PCB "ledge" away from the PCB edge.
+//		Increased the size of the PGM socket pocket to allow clearance for LED and resistor on bottom
+//			of PCB.
+//		Reworked texts to improve printability
+//		Increased weight of Morse elements to improve visibility
 //
 //	Rev C, 10/26/22
 //		converted 2 tabs into one "super-tab" that extends nearly the length of the part
@@ -28,11 +33,12 @@
 //		Added "uses" reference to text lib
 //		Ref shapes "ghosted" with "%'
 
-use <..\uxcover\char.scad>
+//use <..\uxcover\char.scad>
 
 main_len =	90.2;
 tab_len	=	80;
 tab_offs =	(main_len-tab_len)/2;
+depth = 1;
 
 //pcb();
 
@@ -63,7 +69,7 @@ odia1 = 2;
 					translate([0,28.3,10.9]) cube([90.2,.8,.9]);							// lip2
 					translate([0,14,10.9]) cube([.9,15.1,.9]);								// lip2
 					translate([89.3,14,10.9]) cube([.9,15.1,.9]);							// lip2
-					translate([tab_offs,-2.99+.5,8.17]) cube([80,2.5,10.7]);				// tab
+					translate([tab_offs,-2.99+.5,8.17]) cube([80,2.5,13.7]);				// tab
 					translate([tab_offs,0,0.57]) rotate([18.13,0,0]) cube([80,3,8.005]);	// tab taper
 
 					translate([22.5,28.9,5]) rotate([45,0,0]) cube([8,2,2]);				// catch 3
@@ -79,11 +85,11 @@ odia1 = 2;
 				translate([tab_offs+tab_len,-2.5,20]) rotate([0,0,45]) cube([1.5,1.5,40], center=true);		// tab b
 
 				// #1 mtg hole
-				translate([20,30,5.4+1.414]) rotate([90,0,0]) cylinder(r=idia1/2, h=20, center=true, $fn=16);
-				translate([73,30,5.4+1.414]) rotate([90,0,0]) cylinder(r=idia1/2, h=20, center=true, $fn=16);
+				translate([20,30,5.4+1.414-3.25]) rotate([90,0,0]) cylinder(r=idia1/2, h=20, center=true, $fn=16);
+				translate([73,30,5.4+1.414-3.25]) rotate([90,0,0]) cylinder(r=idia1/2, h=20, center=true, $fn=16);
 				// #1 thru hole
-				translate([20,-1.8,15.9]) rotate([-90,0,0]) csink(); //dd=odia1, hd=20);
-				translate([73,-1.8,15.9]) rotate([-90,0,0]) csink(); //(dd=odia1, hd=20);
+				translate([20,-1.8,15.9+3.25]) rotate([-90,0,0]) csink(); //dd=odia1, hd=20);
+				translate([73,-1.8,15.9+3.25]) rotate([-90,0,0]) csink(); //(dd=odia1, hd=20);
 
 				translate([0,0,0]) cube([2,2,30], center=true);						// main body, corner knockouts
 				translate([0,29.1,0]) cube([2,2,30], center=true);					// main body, corner knockouts
@@ -95,8 +101,8 @@ odia1 = 2;
 		translate([45,29.1,0]) rotate([-45,0,0]) cube([100,1,3], center=true);
 		translate([0,15,0]) rotate([0,-45,0]) cube([1,40,3], center=true);
 		translate([90.2,15,0]) rotate([0,45,0]) cube([1,40,3], center=true);
-		translate([1.8,1.8,5.2]) cube([86.6,25.5,9]);								// main central void
-		translate([1.8,1.8,1.8]) cube([5.75,25.5,9]);								// pgm conn
+		translate([1.8,1.7,5.2]) cube([86.6,25.7,9]);								// main central void
+		translate([1.8,1.7,1.8]) cube([10.5,25.7,9]);								// pgm conn
 		translate([1.8,4.2,1.8]) cube([86.6,20.7,9]);								// under pcb
 		translate([-.1,7.4,5.3]) cube([95,14.3,9]);									// rj45 opening
 		rotate([180,0,0]) translate([0,-29.1,-21.8]) union(){
@@ -104,37 +110,42 @@ odia1 = 2;
 		  translate([61.8,29.1,4.5]) rotate([45,0,0]) cube([9,2,2]);				// catch 4
 		}
 		union(){
-		  translate([0,-3.3,17]) rotate([45,0,0]) cube([90.2,4,2]);					// tab cham
-		  translate([0,.15,17]) rotate([20,0,0]) cube([90.2,2,3]);					// tab cham
+		  translate([0,-3.3,17+3]) rotate([45,0,0]) cube([90.2,4,2]);					// tab cham
+		  translate([0,.15,17+3]) rotate([20,0,0]) cube([90.2,2,3]);					// tab cham
 		}
 		
 	//    translate([-10,-10,-10]) cube([50,50,50]);								// section cut (leave commented-out unless needed for debug)
 
 		// "MIC"
-		rotate([180,0,0]) translate([5,-23,-.5]) union(){
+		translate([5,14.5,.5]) rotate([180,0,90]) linear_extrude(1.4) text("MIC", size=7, font="Courier", halign="center");
+
+/*		rotate([180,0,0]) translate([5,-23,-.5]) union(){
 		translate([0,11,0]) char_M();
 		translate([0,6,0]) char_I();
 		translate([0,0,0]) char_C();
-		}
+		}*/
+
 		// "M"
 //		translate([-.1,12.7,1.2]) rotate([90,0,90]) linear_extrude(.5) text("M", size=3.5);
 		// morse "M" (at end of part)
 		translate([0,29/2,3]) union(){
-			translate([0,-(4.5/2)-(1.5/2),0]) rotate([90,0,0]) cylinder(r=.5, h=4.5, center=true, $fn=4);
-			translate([0,(4.5/2)+(1.5/2),0]) rotate([90,0,0]) cylinder(r=.5, h=4.5, center=true, $fn=4);
+			translate([0,-(4.5/2)-(1.5/2),0]) rotate([90,0,0]) cylinder(r=.9, h=4.5, center=true, $fn=4);
+			translate([0,(4.5/2)+(1.5/2),0]) rotate([90,0,0]) cylinder(r=.9, h=4.5, center=true, $fn=4);
 		}
 
 		// "RIG"
-		rotate([0,180,0]) translate([-85,7.2,-.5]) union(){
+		translate([85,14.5,.5]) rotate([180,0,90+180]) linear_extrude(1.4) text("RIG", size=7, font="Courier", halign="center");
+
+/*		rotate([0,180,0]) translate([-85,7.2,-.5]) union(){
 			translate([0,11,0]) char_R();
 			translate([0,6,0]) char_I();
 			translate([0,0,0]) char_G();
-		}
+		}*/
 		// morse "R" (at end of part)
 		translate([90.2,29/2,3]) union(){
-			translate([0,-(4.5/2)-1.5-(1.5/2),0]) rotate([90,0,0]) cylinder(r=.5, h=1.5, center=true, $fn=4);
-			translate([0,0,0]) rotate([90,0,0]) cylinder(r=.5, h=4.5, center=true, $fn=4);
-			translate([0,+(4.5/2)+1.5+(1.5/2),0]) rotate([90,0,0]) cylinder(r=.5, h=1.5, center=true, $fn=4);
+			translate([0,-(4.5/2)-1.5-(1.5/2),0]) rotate([90,0,0]) cylinder(r=.9, h=1.5, center=true, $fn=4);
+			translate([0,0,0]) rotate([90,0,0]) cylinder(r=.9, h=4.5, center=true, $fn=4);
+			translate([0,+(4.5/2)+1.5+(1.5/2),0]) rotate([90,0,0]) cylinder(r=.9, h=1.5, center=true, $fn=4);
 		}
 	}
 		// corner rounds
@@ -143,16 +154,18 @@ odia1 = 2;
 		translate([90.2-1,29.1-1,0]) rotate([0,0,-180]) corner2(cht=10.9+.9);
 		translate([90.2-1,1,0]) rotate([0,0,-270]) corner(cht=10.9);
 
-		translate([7.5,13.55,.51]) cube([10,2,2.2]);					// RJ45 compression rib 1
-		translate([75,13.55,.51]) cube([10,2,2.2]);						// RJ45 compression rib 2
+		translate([7.5,13.55,1.51]) cube([10,2,2.2-1]);						// RJ45 compression rib 1
+		translate([75,13.55,1.51]) cube([10,2,2.2-1]);						// RJ45 compression rib 2
 
 		// signature/revision
-		txt_sz = 3;
-		translate([20,15+(txt_sz/2)+(.2*txt_sz),.8]) linear_extrude(1.4) text("KE0FF", size=txt_sz);
-		translate([25.65+.05,15+(txt_sz/2)+(.2*txt_sz)-.08,.8]) rotate([0,0,-26]) cube([.3,3.5,1.4]);			
+		translate([20,15,0]) scale([1.5,1.5,1]){
+		  txt_sz = 3;
+		  translate([0,(txt_sz/2)+(.2*txt_sz),.8]) linear_extrude(1.4) text("KE0FF", size=txt_sz);
+		  translate([5.65+.05,(txt_sz/2)+(.2*txt_sz)-.08,.8]) rotate([0,0,-26]) cube([.3,3.5,1.4]);			
 
-		translate([20,15-txt_sz/2,.8]) linear_extrude(1.4) text("HM133 COVER", size=txt_sz);
-		translate([20,15+(-txt_sz*3/2)-(.2*txt_sz),.8]) linear_extrude(1.4) text("REV D", size=txt_sz);
+		  translate([0,-txt_sz/2,.8]) linear_extrude(1.4) text("HM133 COVER", size=txt_sz);
+		  translate([0,(-txt_sz*3/2)-(.2*txt_sz),.8]) linear_extrude(1.4) text("REV D", size=txt_sz);
+		}
 	}
 } // end prime()
 
@@ -195,4 +208,88 @@ module pcb(){
 	}
 } // end pcb()
 
+// characters ///////////////////////////////////////////////////////////////////////////
+lw = 1.3;
+
+//char_M();
+
+module char_M(){
+  union(){										// "M"
+	rotate([90,0,90]) seg();
+//	cube([6,.8,depth]);
+#	translate([2.4,3.3,0]) rotate([90,0,45]) seg(len=3.4);
+	translate([2.05,3.45,0]) rotate([90,0,135]) seg(len=3.4);
+//	translate([6,.8,0]) rotate([0,0,135]) cube([3.4,.8,depth]);
+//	translate([5.6,5.34-.15,0]) rotate([0,0,225]) cube([3.65,.8,depth]);
+	translate([4.8,0,0]) rotate([90,0,90]) seg(len=6);
+//	translate([0,5-.6,0]) cube([6,.8,depth]);
+  }
+}
+
+module char_I(){
+  union(){										// "I"
+	cube([.5,3,depth]);
+	translate([0,1.3,0]) cube([6,.5,depth]);
+	translate([5.5,0,0]) cube([.5,3,depth]);
+  }
+}
+
+module char_C(){
+   union(){										// "C"
+	translate([1,3.5,0]) cube([4.3,.5,depth]);
+	translate([0,1,0]) cube([.5,2,depth]);
+	translate([5.8,1,0]) cube([.5,2,depth]);
+	translate([0,1,0]) rotate([0,0,315]) cube([1.4,.5,depth]);
+	translate([5.95,1.35,0]) rotate([0,0,225]) cube([1.4,.5,depth]);
+	translate([4.95,3.66,0]) rotate([0,0,315]) cube([1.4,.5,depth]);
+	translate([1,4,0]) rotate([0,0,225]) cube([1.4,.5,depth]);
+  }
+}
+
+module char_CIRCLEI(){
+  union(){										// ICOM "I"
+	translate([0,1.3,0]) cube([5.5,.7,depth]);
+	translate([8.6,1.45,0]) union(){
+		difference(){
+			cylinder(h=depth, d=5.5, center=false, $fn=16);
+			translate([0,0,-.1]) cylinder(h=2, d=4.3, center=false, $fn=16);
+		}
+	}
+  }
+}
+
+module char_R(){
+  union(){										// "R"
+	translate([0,3.5,0]) cube([6.1,.5,depth]);
+	translate([3.8,0,0]) cube([1.7,.5,depth]);
+	translate([6,1,0]) cube([.5,3,depth]);
+	translate([2.8,1,0]) cube([.5,3,depth]);
+	translate([2.8,1,0]) rotate([0,0,315]) cube([1.4,.5,depth]);
+	translate([6.1,1.33,0]) rotate([0,0,225]) cube([1.4,.5,depth]);
+	translate([0,0,0]) rotate([0,0,20]) cube([3.3,.5,depth]);
+  }
+}
+
+module char_G(){
+  union(){										// "G"
+	translate([1,3.5,0]) cube([4.3,.5,depth]);
+	translate([0,1,0]) cube([.5,2,depth]);
+	translate([5.8,1,0]) cube([.5,2,depth]);
+	translate([0,1,0]) rotate([0,0,315]) cube([1.4,.5,depth]);
+	translate([5.95,1.35,0]) rotate([0,0,225]) cube([1.4,.5,depth]);
+	translate([4.95,3.66,0]) rotate([0,0,315]) cube([1.4,.5,depth]);
+	translate([1,4,0]) rotate([0,0,225]) cube([1.4,.5,depth]);
+	translate([1,0,0]) cube([1.51,.5,depth]);
+	translate([2.5,0,0]) cube([.5,2,depth]);
+  }
+}
+
+//seg();
+module seg(len=6){
+bev = .5;
+
+	translate([bev,0,0]) rotate([90,0,90]) cylinder(r=lw/2, h=len-(2*bev), $fn=4);
+	rotate([90,0,90]) cylinder(r2=lw/2, r1=0, h=bev, $fn=4);
+	translate([len-bev,0,0]) rotate([90,0,90]) cylinder(r1=lw/2, r2=0, h=bev, $fn=4);
+}
 // eof
